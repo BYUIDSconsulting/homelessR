@@ -46,10 +46,10 @@ tot_employ <- function(api_key ='') {
                            , api_key)
   
   req <- get_call_to_list(url)
-  dat <- as.data.frame(dat_1st$BEAAPI$Results$Data[1])
-  for (j in 2:length(dat_1st$BEAAPI$Results$Data)) {
+  dat <- as.data.frame(req$BEAAPI$Results$Data[1])
+  for (j in 2:length(req$BEAAPI$Results$Data)) {
     # Append the API result to the data frame
-    r <- as.data.frame(dat_1st$BEAAPI$Results$Data[j])
+    r <- as.data.frame(req$BEAAPI$Results$Data[j])
     dat <- bind_rows(dat,r)
   }
   return(dat)

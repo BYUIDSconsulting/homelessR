@@ -46,10 +46,6 @@ tot_employ <- function(api_key ='') {
                            , api_key)
   
   req <- get_call_to_list(url)
-  print('API call made.')
-  print("")
-  mid <- Sys.time()-old
-  print(mid)
   dat <- as.data.frame(dat_1st$BEAAPI$Results$Data[1])
   for (j in 2:length(dat_1st$BEAAPI$Results$Data)) {
     # Append the API result to the data frame

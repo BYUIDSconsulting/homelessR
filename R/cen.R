@@ -1,0 +1,61 @@
+get_census_data <- function(table = "B01001", start_year=2010, end_year=2019,  output="wide", geography = "state", survey = "acs1"){
+  
+  years = start_year:end_year
+  temp <- data.frame(matrix(ncol = 0, nrow = 0))
+  
+  
+  for (year in years) {
+    
+    #send request for data from a specific year
+    data3 <- get_acs(
+      geography = geography,
+      table = table,
+      year = year,
+      endyear = NULL,
+      output = "wide",
+      state = NULL,
+      county = NULL,
+      zcta = NULL,
+      geometry = FALSE,
+      keep_geo_vars = FALSE,
+      shift_geo = FALSE,
+      summary_var = NULL,
+      key = NULL,
+      moe_level = 90,
+      survey = "acs1",
+      show_call = FALSE
+    )
+    
+    data4 <- data3 %>% pivot_longer(starts_with("B0"), names_to = "name")
+    
+    var <- load_variables(year, "acs1")
+    
+    new_var <- subset(var, select = -c(concept))
+    
+    
+    new_names <- left_join(data4, new_var, by = "name")
+    
+    data5 <- data4 %>% 
+      filter(str_sub(name, -1, -1) == "E") %>% 
+      mutate(name = substr(name,1,nchar(name)-1) 
+      )
+    #I am a resting hippo
+    data6 <- left_join(data5, new_var, by="name") %>%
+      mutate(year = year) %>%
+      mutate(name = label) %>%
+      select(-c(label))
+    
+    data7 <- data6 %>% rename(Category = name) %>% select(-value, value) %>% 
+      rename(state = NAME) %>% rename(Year = year)
+    colnames(data7) = gsub(pattern = ":", replacement = "", x = colnames(data7))
+    
+    
+    if (nrow(temp) == 0) {
+      temp <- data7
+    } else {
+      temp <- rbind(temp, data7)
+    }
+  }
+  temp2 <- temp %>% pivot_wider(names_from = Category, values_from = value)
+  return(temp2)
+}

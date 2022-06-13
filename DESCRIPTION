@@ -1,6 +1,6 @@
 Package: homelessR
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
+Title: This package gathers data on homelessness in the united states
+Version: 0.0.0.9100
 Authors@R: 
     person("J.", "Hathway", , "hathwayj@byui.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-1574-0832"))

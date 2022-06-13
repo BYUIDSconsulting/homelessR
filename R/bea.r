@@ -67,17 +67,22 @@ filter_year <- function(data, start = 0000, end = 9999) {
 
 agg_state_year <- function(data) {
   return(data %>% 
-      mutate(DataValue = str_replace_all(DataValue, ',', ''), 
-             TimePeriod = as.numeric(TimePeriod), 
-             DataValue = str_replace(DataValue, '\\(NA\\)', '0'),
-             DataValue = as.numeric(DataValue),
-             DataValue = replace_na(DataValue, 0),
-             GeoName = str_replace(GeoName, '\\*', ''),
-             state = str_extract(GeoName, '[[:upper:]$]{2}')) %>%
-    select(-GeoFips, -county, -NoteRef) %>% 
-    group_by(state, TimePeriod) %>% 
-    mutate(DataValue = sum(DataValue)) %>% 
-    distinct()
+           mutate(DataValue = str_replace_all(DataValue, ',', ''), 
+                  TimePeriod = as.numeric(TimePeriod), 
+                  DataValue = str_replace(DataValue, '\\(NA\\)', '0'),
+                  DataValue = as.numeric(DataValue),
+                  DataValue = replace_na(DataValue, 0),
+                  GeoName = str_replace(GeoName, '\\*', ''),
+                  state = str_extract(GeoName, '[[:upper:]$]{2}')) %>%
+           # separate(col = GeoName
+           #          , into = c('county', 'state')
+           #          , sep = ','
+           #          , extra = 'merge') %>%
+           # View()
+           select(-GeoFips, -GeoName) %>%
+           group_by(state, TimePeriod) %>% 
+           mutate(DataValue = sum(DataValue)) %>%
+           distinct()
     )
 }
 
@@ -99,7 +104,7 @@ tot_employ <- function(api_key ='', start_year = 0000, end_year = 9999) {
                            , line_code
                            , api_key)
   
-  req <- get_call_to_list(url)
+  req <- call_to_list(url)
   dat <- as.data.frame(req$BEAAPI$Results$Data[1])
   for (j in 2:length(req$BEAAPI$Results$Data)) {
     # Append the API result to the data frame
@@ -107,7 +112,7 @@ tot_employ <- function(api_key ='', start_year = 0000, end_year = 9999) {
     dat <- dplyr::bind_rows(dat,r)
   }
   
-  # dat <- agg_state_year(data = dat)
-  # dat <- filter_year(data = dat, start = start_year, end = end_year)
+  dat <- agg_state_year(data = dat)
+  dat <- filter_year(data = dat, start = start_year, end = end_year)
   return(dat)
 }

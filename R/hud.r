@@ -10,7 +10,7 @@ hud_data <- function(y, url1= 'https://www.huduser.gov/portal/sites/default/file
   names(hud) = gsub(pattern = ",.*", replacement = "", x = names(hud))
   hud <- hud[-57,]
 }
-dplyr::
+
 
 
 #' @title Gather data from 2007 - 2020

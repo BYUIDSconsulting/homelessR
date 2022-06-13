@@ -1,30 +1,16 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
-=======
->>>>>>> 8e3d98f2c75ed2b8fb0439c3faccaabcc5120c79
 #' @import tidycensus
 #' @import tidyverse
->>>>>>> ef67ab65a7596335b08272ef88b4864b1a66e3b8
 #' @title download census data
 #' @param table, the name of the table 
 #' @param start_year the first year you would like data from
 #' @param end_year the latest year you would like data from
-<<<<<<< HEAD
-#' @param output tidy or wide
 #' @param geography state, county, ect.
 #' @param survey acs1 or acs5
 #' @examples 
-#' @export 
-get_census_data <- function(table = "B01001", start_year=2010, end_year=2019,  output="wide", geography = "state", survey = "acs1"){
-=======
-#' @param geography state, county, ect.
-#' @param survey acs1 or acs5
-#' @return returns a data set given the specifications
+#' @export
+#' @return the data set
 
 get_census_data <- function(table = "B01001", start_year=2010, end_year=2019, geography = "state", survey = "acs1"){
->>>>>>> ef67ab65a7596335b08272ef88b4864b1a66e3b8
   
   years = start_year:end_year
   temp <- data.frame(matrix(ncol = 0, nrow = 0))
@@ -90,7 +76,7 @@ get_census_data <- function(table = "B01001", start_year=2010, end_year=2019, ge
 #' @title enter api key 
 #' @param apikey, your personal api key, you must ask for this on the census website
 
-establish_api <- function(apikey) {
+establish_census_api <- function(apikey) {
   
   census_api_key(apikey, install = TRUE, overwrite = TRUE)
   

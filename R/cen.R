@@ -1,4 +1,3 @@
-
 #' @import tidycensus
 #' @import tidyverse
 #' @title download census data
@@ -7,7 +6,7 @@
 #' @param end_year the latest year you would like data from
 #' @param geography state, county, ect.
 #' @param survey acs1 or acs5
-#' @return returns a dataset given the specifications
+#' @return returns a data set given the specifications
 
 get_census_data <- function(table = "B01001", start_year=2010, end_year=2019, geography = "state", survey = "acs1"){
   
@@ -74,6 +73,7 @@ get_census_data <- function(table = "B01001", start_year=2010, end_year=2019, ge
 #' @import tidycensus
 #' @title enter api key 
 #' @param apikey, your personal api key, you must ask for this on the census website
+
 establish_api <- function(apikey) {
   
   census_api_key(apikey, install = TRUE, overwrite = TRUE)

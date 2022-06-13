@@ -79,7 +79,7 @@ agg_state_year <- function(data) {
            #          , sep = ','
            #          , extra = 'merge') %>%
            # View()
-           select(-GeoFips, -GeoName) %>%
+           select(-GeoFips, -GeoName, -NoteRef) %>%
            group_by(state, TimePeriod) %>% 
            mutate(DataValue = sum(DataValue)) %>%
            distinct()

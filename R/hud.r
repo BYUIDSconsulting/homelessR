@@ -21,7 +21,7 @@ hud_data <- function(y, url1= 'https://www.huduser.gov/portal/sites/default/file
 gather_hud_data <- function(){
   da2007 <- hud_data('2007')
   columns = colnames(da2007)
-  da2008 <- hud_data('2008') %>% dplyr::dplyr::select(columns)
+  da2008 <- hud_data('2008') %>% dplyr::select(columns)
   da2009 <- hud_data('2009') %>% dplyr::select(columns)
   da2010 <- hud_data('2010') %>% dplyr::select(columns)
   da2011 <- hud_data('2011') %>% dplyr::select(columns)

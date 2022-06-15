@@ -87,19 +87,19 @@ agg_state_year <- function(data) {
 }
 
 
-#' @title tot_employ
+#' @title tot_employ_bea
 #' @param api_key - The API key from the bea.gov website. The following link will take you to the bea.gov website to register for an API key: https://apps.bea.gov/API/signup/index.cfm
 #' @param start_year The year that the data should start. The earliest data is from 2000.
 #' @param end_year The year that the data should end. The latest data is from 2020. 
-#' @return The number of people that were employed for a year in a state
+#' @return The number of people that were employed for a year in a state to the desired years
 #' @export
-tot_employ <- function(api_key ='', start_year = 0000, end_year = 9999) {
+tot_employ_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
   
   dataset_name <- "Regional"
   dataset <- "CAEMP25N"
   line_code <- '10'
   
-  url <- base_get_data_url(dataset_name
+  url <- make_get_url(dataset_name
                            , dataset
                            , line_code
                            , api_key)
@@ -116,3 +116,28 @@ tot_employ <- function(api_key ='', start_year = 0000, end_year = 9999) {
   dat <- filter_year(data = dat, start = start_year, end = end_year)
   return(dat)
 }
+
+gdp_cur_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
+  
+  dataset_name <- "Regional"
+  dataset <- "CAGDP1"
+  line_code <- '3'
+  
+  url <- make_get_url(dataset_name
+                           , dataset
+                           , line_code
+                           , api_key)
+  
+  req <- call_to_list(url)
+  dat <- as.data.frame(req$BEAAPI$Results$Data[1])
+  for (j in 2:length(req$BEAAPI$Results$Data)) {
+    # Append the API result to the data frame
+    r <- as.data.frame(req$BEAAPI$Results$Data[j])
+    dat <- dplyr::bind_rows(dat,r)
+  }
+  
+  dat <- agg_state_year(data = dat)
+  dat <- filter_year(data = dat, start = start_year, end = end_year)
+  return(dat)
+}
+

@@ -4,6 +4,9 @@
 #' @import httr
 #' @import dplyr
 #' @import rjson
+#' @import tidyr
+#' @import stringr
+#' 
 #' @title call_to_list
 #' @param call_url the API url that will be sent to the bea.gov API
  

@@ -58,7 +58,7 @@ filter_year <- function(data, start = 0000, end = 9999) {
   } else if (start != 0000 & end != 9999) {
     if (end>start){
       data %>%
-        filter(as.numeric(TimePeriod) > start & as.numeric(TimePeriod)<end)
+        dplyr::filter(as.numeric(TimePeriod) > start & as.numeric(TimePeriod)<end)
       return(data)
       }
   } # may need to test new exceptions
@@ -70,22 +70,22 @@ filter_year <- function(data, start = 0000, end = 9999) {
 
 agg_state_year <- function(data) {
   return(data %>% 
-           mutate(DataValue = str_replace_all(DataValue, ',', ''), 
+           dplyr::mutate(DataValue = str_replace_all(DataValue, ',', ''), 
                   TimePeriod = as.numeric(TimePeriod), 
-                  DataValue = str_replace(DataValue, '\\(NA\\)', '0'),
+                  DataValue = stringr::str_replace(DataValue, '\\(NA\\)', '0'),
                   DataValue = as.numeric(DataValue),
-                  DataValue = replace_na(DataValue, 0),
-                  GeoName = str_replace(GeoName, '\\*', ''),
-                  state = str_extract(GeoName, '[[:upper:]$]{2}')) %>%
+                  DataValue = tidyr::replace_na(DataValue, 0),
+                  GeoName = stringr::str_replace(GeoName, '\\*', ''),
+                  state = stringr::str_extract(GeoName, '[[:upper:]$]{2}')) %>%
            # separate(col = GeoName
            #          , into = c('county', 'state')
            #          , sep = ','
            #          , extra = 'merge') %>%
            # View()
-           select(-GeoFips, -GeoName, -NoteRef) %>%
-           group_by(state, TimePeriod) %>% 
-           mutate(DataValue = sum(DataValue)) %>%
-           distinct()
+           dplyr::select(-GeoFips, -GeoName, -NoteRef) %>%
+           dplyr::group_by(state, TimePeriod) %>% 
+           dplyr::mutate(DataValue = sum(DataValue)) %>%
+           dplyr::distinct()
     )
 }
 

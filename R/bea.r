@@ -57,7 +57,7 @@ filter_year <- function(data, start = 0000, end = 9999) {
     return(data)
   } else if (start != 0000 & end != 9999) {
     if (end>start){
-      data %>%
+      data |
         dplyr::filter(as.numeric(TimePeriod) > start & as.numeric(TimePeriod)<end)
       return(data)
       }
@@ -69,7 +69,7 @@ filter_year <- function(data, start = 0000, end = 9999) {
 #' @return returns the dataset aggregated to data values per state per year.  
 
 agg_state_year <- function(data) {
-  return(data %>% 
+  return(data |
            dplyr::mutate(DataValue = str_replace_all(DataValue, ',', ''), 
                   TimePeriod = as.numeric(TimePeriod), 
                   DataValue = stringr::str_replace(DataValue, '\\(NA\\)', '0'),

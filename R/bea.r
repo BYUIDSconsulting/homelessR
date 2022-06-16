@@ -121,7 +121,7 @@ tot_employ_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
 #' @param api_key - The API key from the bea.gov website. The following link will take you to the bea.gov website to register for an API key: https://apps.bea.gov/API/signup/index.cfm
 #' @param start_year The year that the data should start. The earliest data is from 2000.
 #' @param end_year The year that the data should end. The latest data is from 2020. 
-#' @return The number of people that were employed for a year in a state to the desired years
+#' @return The real gdp for a year in a state to the desired years
 #' @export
 
 gdp_cur_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {

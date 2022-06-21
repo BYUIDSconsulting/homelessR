@@ -6,6 +6,8 @@
 #' @import rjson
 #' @import tidyr
 #' @import stringr
+#' @import magrittr
+#' 
 #' 
 #' @title call_to_list
 #' @param call_url the API url that will be sent to the bea.gov API

@@ -5,6 +5,7 @@ Authors@R:
     person("J.", "Hathway", , "hathwayj@byui.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-1574-0832"))
 Description: What the package does (one paragraph).
+Imports: httr, rjson, dplyr, tidyr, stringr, tidycensus, openxlsx
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8

@@ -37,7 +37,7 @@ gather_hud_data <- function(){
   
   
   result <- rbind(da2007, da2008, da2009, da2010, da2011, da2012, da2013,
-                  da2014, da2015, da2016, da2017, da2018, da2019, da2020) %>% 
-    rename(state = State)
+                  da2014, da2015, da2016, da2017, da2018, da2019, da2020) |>
+    dplyr::rename(state = State)
 }
 

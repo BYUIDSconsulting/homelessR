@@ -40,7 +40,7 @@ get_url <- function(year){
   }
   temp = tempfile()
   download.file(url, destfile = temp, mode = "wb")
-  data <- read_excel(temp)
+  data <- readxl::read_excel(temp)
   final_data <- clean_data(data, year)
   return(final_data)
 }
@@ -53,38 +53,39 @@ get_url <- function(year){
 clean_data <- function(data, year){
   ## remove the first few rows and make the new first row the column names
   df <- data[-c(1, 2, 3),]
-  df1 <- df %>%
-    row_to_names(row_number = 1) %>%
+  df1 <- df |>
+    janitor::row_to_names(row_number = 1) |>
     clean_names()
   
   ## split the State column into two columns for State and Metropolitan area
-  df1 <- df1 %>%
-    separate(state, c("state", "area_type"))
+  df1 <- df1 |>
+    dplyr::separate(state, c("state", "area_type"))
+    #confirm that this is a dplyr function
   
   ## have all states and area types repeat in the empty rows beneath them 
-  df2 <- df1 %>%
-  fill(state, .direction = 'down')
-  df2 <- df2 %>%
-  fill(area_type, .direction = 'down')
+  df2 <- df1 |>
+  tidyr::fill(state, .direction = 'down')
+  df2 <- df2 |>
+  tidyr::fill(area_type, .direction = 'down')
   
   ## remove the numbers from State, Area Type, and County
-  df2$state <- str_replace_all(df2$state, "[:digit:]", "")
-  df2$county <- str_replace_all(df2$county, "[:digit:]", "")
+  df2$state <- stringr::str_replace_all(df2$state, "[:digit:]", "")
+  df2$county <- stringr::str_replace_all(df2$county, "[:digit:]", "")
   
   ## remove the numbers from the column
-  df2 <- df2 %>%
-  rename_with(~ gsub('[[:digit:]]', '', .x))
+  df2 <- df2 |>
+  dplyr::rename_with(~ gsub('[[:digit:]]', '', .x))
   
   ## remove the rows about the subscripts
   states <- c("Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", 
 "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming")
-  df3 <- df2 %>%
+  df3 <- df2 |>
     filter(state %in% str_to_upper(states))
   
   ## add a column with the year of data
   df3$year <- year
   
-  ## rename forible rape to rape
+  ## rename forcible rape to rape
   if (year <= 2015 & year >= 2013) {
     df3$`rape_legacy_definition_` <- as.numeric(df3$`rape_legacy_definition_`)
     df3$`rape_revised_definition_` <- as.numeric(df3$`rape_revised_definition_`)
@@ -94,8 +95,8 @@ clean_data <- function(data, year){
     df3 <- df3[, -c(6:7)]
   }
   else if (year == 2012 | year == 2011 | year == 2010 | year == 2009 | year == 2007 | year == 2006) {
-    df3 <- df3 %>%
-      rename(c('forcible_rape' = 'rape'))
+    df3 <- df3 |>
+      dplyr::rename(c('forcible_rape' = 'rape'))
   }
   #View(df3)
   return(df3)

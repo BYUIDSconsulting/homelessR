@@ -1,18 +1,13 @@
----
-  title: "Crime Data Functions"
-output: html_document
----
-
-library(tidyverse)
-library(readxl)
-library(tidyselect)
-library(dplyr)
-library(stringr)
-library(downloader)
-library(janitor)
-library(tm)
-library(imputeTS)
-library(plyr)
+#' @import tidyverse
+#' @import readxl
+#' @import tidyselect
+#' @import dplyr
+#' @import stringr
+#' @import downloader
+#' @import janitor
+#' @import tm
+#' @import imputeTS
+#' @import plyr
 
 #'@title get_url
 #'@param year year of data desired from 2006-2019 excluding 2008 and 2016

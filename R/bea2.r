@@ -11,7 +11,7 @@
 #' 
 #' @title call_to_list
 #' @param call_url the API url that will be sent to the bea.gov API
- 
+
 call_to_list <- function(call_url){
   results <- httr::GET(call_url)
   return(rjson::fromJSON(as.character(results)))
@@ -62,7 +62,7 @@ filter_year <- function(data, start = 0000, end = 9999) {
       data |>
         dplyr::filter(as.numeric(TimePeriod) > start & as.numeric(TimePeriod)<end)
       return(data)
-      }
+    }
   } # may need to test new exceptions
 }
 
@@ -73,12 +73,12 @@ filter_year <- function(data, start = 0000, end = 9999) {
 agg_state_year <- function(data) {
   return(data |>
            dplyr::mutate(DataValue = str_replace_all(DataValue, ',', ''), 
-                  TimePeriod = as.numeric(TimePeriod), 
-                  DataValue = stringr::str_replace(DataValue, '\\(NA\\)', '0'),
-                  DataValue = as.numeric(DataValue),
-                  DataValue = tidyr::replace_na(DataValue, 0),
-                  GeoName = stringr::str_replace(GeoName, '\\*', ''),
-                  state = stringr::str_extract(GeoName, '[[:upper:]$]{2}')) |>
+                         TimePeriod = as.numeric(TimePeriod), 
+                         DataValue = stringr::str_replace(DataValue, '\\(NA\\)', '0'),
+                         DataValue = as.numeric(DataValue),
+                         DataValue = tidyr::replace_na(DataValue, 0),
+                         GeoName = stringr::str_replace(GeoName, '\\*', ''),
+                         state = stringr::str_extract(GeoName, '[[:upper:]$]{2}')) |>
            # separate(col = GeoName
            #          , into = c('county', 'state')
            #          , sep = ','
@@ -88,7 +88,7 @@ agg_state_year <- function(data) {
            dplyr::group_by(state, TimePeriod) |>
            dplyr::mutate(DataValue = sum(DataValue)) |>
            dplyr::distinct()
-    )
+  )
 }
 
 
@@ -105,9 +105,9 @@ tot_employ_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
   line_code <- '10'
   
   url <- make_get_url(dataset_name
-                           , dataset
-                           , line_code
-                           , api_key)
+                      , dataset
+                      , line_code
+                      , api_key)
   
   req <- call_to_list(url)
   dat <- as.data.frame(req$BEAAPI$Results$Data[1])
@@ -136,9 +136,9 @@ gdp_cur_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
   line_code <- '3'
   
   url <- make_get_url(dataset_name
-                           , dataset
-                           , line_code
-                           , api_key)
+                      , dataset
+                      , line_code
+                      , api_key)
   
   req <- call_to_list(url)
   dat <- as.data.frame(req$BEAAPI$Results$Data[1])

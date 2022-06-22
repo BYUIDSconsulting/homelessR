@@ -36,7 +36,7 @@ get_census_data <- function(table = "B01001", start_year=2010, end_year=2019,  o
       show_call = FALSE
     )
     
-    data4 <- data3 %>% tidyr::pivot_longer(starts_with("B0"), names_to = "name")
+    data4 <- data3 |> tidyr::pivot_longer(starts_with("B0"), names_to = "name")
     
     var <- tidycensus::load_variables(year, "acs1")
     
@@ -66,7 +66,7 @@ get_census_data <- function(table = "B01001", start_year=2010, end_year=2019,  o
       temp <- rbind(temp, data7)
     }
   }
-  temp2 <- temp |> tidyr:pivot_wider(names_from = Category, values_from = value)
+  temp2 <- temp |> tidyr::pivot_wider(names_from = Category, values_from = value)
   return(temp2)
 }
 

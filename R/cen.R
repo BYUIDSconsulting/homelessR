@@ -7,8 +7,6 @@
 #' @param end_year the latest year you would like data from
 #' @param output tidy or wide
 #' @param geography state, county, ect.
-#' @param survey acs1 or acs5
-#' @examples 
 #' @export 
 get_census_data <- function(table = "B01001", start_year=2010, end_year=2019,  output="wide", geography = "state", survey = "acs1"){
   
@@ -70,4 +68,12 @@ get_census_data <- function(table = "B01001", start_year=2010, end_year=2019,  o
   }
   temp2 <- temp |> tidyr:pivot_wider(names_from = Category, values_from = value)
   return(temp2)
+}
+
+#' @import tidycensus
+#' @title enter api key
+#' @param apikey, your personal api key, you must ask for this on the census website
+establish_census_api <- function(apikey) {
+  tidy_census::census_api_key(apikey, install = TRUE, overwrite = TRUE)
+  readRenviron("~/.Renviron")
 }

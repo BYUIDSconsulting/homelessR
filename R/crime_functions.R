@@ -42,7 +42,8 @@ get_url <- function(year){
   temp = tempfile()
   download.file(url, destfile = temp, mode = "wb")
   data <- read_excel(temp)
-  clean_data(data, year)
+  final_data <- clean_data(data, year)
+  return(final_data)
 }
 
 #'@title clean_data
@@ -97,6 +98,7 @@ clean_data <- function(data, year){
     df3 <- df3 %>%
       rename(c('forcible_rape' = 'rape'))
   }
-  View(df3)
+  #View(df3)
+  return(df3)
 }
 

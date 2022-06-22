@@ -19,7 +19,7 @@ call_to_list <- function(call_url){
 
 #' @title make_get_url
 #' @param dataset_name - The macro type of dataset. For most of the bea functions, the default is Regional
-#' @param dataset - the section of the data for the bea data
+#' @param dataset - the section of the %>% for the bea data
 #' @param line_code - this is the specific slice of data that you would like
 #' @param api_key - Required for all data calls to the bea website. 
 #' @return An API url that can be used to make a call against the bea.gov API. 

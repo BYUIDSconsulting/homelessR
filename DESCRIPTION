@@ -2,8 +2,12 @@ Package: homelessR
 Title: This package gathers data on homelessness in the united states
 Version: 0.0.0.9100
 Authors@R: 
-    person("J.", "Hathway", , "hathwayj@byui.edu", role = c("aut", "cre"),
-           comment = c(ORCID = "0000-0002-1574-0832"))
+    c(person(given = "Adam"
+            , family = "Romriell"
+            , email = "adamromriell@gmail.com")
+    , person("J."
+           , "Hathway", , "hathwayj@byui.edu", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-1574-0832")))
 Description: What the package does (one paragraph).
 Imports: httr, rjson, dplyr, tidyr, stringr, tidycensus, openxlsx
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
@@ -11,3 +15,4 @@ License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.0
+Imports: httr, magrittr, openxlsx, rjson, tidycensus, tidyverse, downloader, imputeTS, janitor, openxlsx, plyr, readxl, rjson, tidyselect, tm

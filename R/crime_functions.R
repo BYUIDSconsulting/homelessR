@@ -1,32 +1,24 @@
----
-title: "Crime Data Functions"
-output: html_document
----
+#' @import tidyverse
+#' @import readxl
+#' @import tidyselect
+#' @import dplyr
+#' @import stringr
+#' @import downloader
+#' @import janitor
+#' @import tm
+#' @import imputeTS
+#' @import plyr
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-```{r}
-library(tidyverse)
-library(readxl)
-library(tidyselect)
-library(dplyr)
-library(stringr)
-library(downloader)
-library(janitor)
-library(tm)
-library(imputeTS)
-library(plyr)
-```
-
-```{r}
-## the the url for the data
+#' @title get_url
+#' @param year year of data desired from 2006-2019 excluding 2008 and 2016
+#' @author Becca Ebersole
+#' @example get_url(2019)
+#' @export
 get_url <- function(year){
-year = year
-if (year >= 2017) {
-  url = paste0("https://ucr.fbi.gov/crime-in-the-u.s/", year, "/crime-in-the-u.s.-", year, "/tables/table-10/table-10.xls")
-}
+  year = year
+  if (year >= 2017) {
+    url = paste0("https://ucr.fbi.gov/crime-in-the-u.s/", year, "/crime-in-the-u.s.-", year, "/tables/table-10/table-10.xls")
+  }
   else if (year == 2015 | year == 2013){
     url = paste0("https://ucr.fbi.gov/crime-in-the-u.s/", year, "/crime-in-the-u.s.-", year, "/tables/table-10/table_10_offenses_known_to_law_enforcement_by_state_by_metropolitan_and_nonmetropolitan_counties_", year, ".xls")
   }
@@ -46,15 +38,17 @@ if (year >= 2017) {
     last_two = substring(year, 2)
     url = paste0("https://www2.fbi.gov/ucr/cius", year, "/data/documents/", substring(year, 3), "tbl10.xls")
   }
-temp = tempfile()
-download.file(url, destfile = temp, mode = "wb")
-data <- read_excel(temp)
-
-clean_data(data, year)
+  temp = tempfile()
+  download.file(url, destfile = temp, mode = "wb")
+  data <- read_excel(temp)
+  final_data <- clean_data(data, year)
+  return(final_data)
 }
-```
 
-```{r}
+#'@title clean_data
+#'@param data calls the data from the get_url function and cleans that data frame so its ready for the user
+#'@param year calls the year from the get_url function and used it in `if` statements to execute certain code based on the year the data is on
+
 ## clean the data 
 clean_data <- function(data, year){
   ## remove the first few rows and make the new first row the column names
@@ -84,7 +78,6 @@ clean_data <- function(data, year){
   ## remove the rows about the subscripts
   states <- c("Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", 
 "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming")
-
   df3 <- df2 %>%
     filter(state %in% str_to_upper(states))
   
@@ -104,9 +97,7 @@ clean_data <- function(data, year){
     df3 <- df3 %>%
       rename(c('forcible_rape' = 'rape'))
   }
-  View(df3)
+  #View(df3)
+  return(df3)
 }
-```
-
-
 

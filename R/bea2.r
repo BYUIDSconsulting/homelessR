@@ -79,11 +79,6 @@ agg_state_year <- function(data) {
                          DataValue = tidyr::replace_na(DataValue, 0),
                          GeoName = stringr::str_replace(GeoName, '\\*', ''),
                          state = stringr::str_extract(GeoName, '[[:upper:]$]{2}')) |>
-           # separate(col = GeoName
-           #          , into = c('county', 'state')
-           #          , sep = ','
-           #          , extra = 'merge') %>%
-           # View()
            dplyr::select(-GeoFips, -GeoName, -NoteRef) |>
            dplyr::group_by(state, TimePeriod) |>
            dplyr::mutate(DataValue = sum(DataValue)) |>
@@ -99,26 +94,46 @@ agg_state_year <- function(data) {
 #' @return The number of people that were employed for a year in a state to the desired years
 #' @export
 tot_employ_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
-  
+  start <- Sys.time()
   dataset_name <- "Regional"
   dataset <- "CAEMP25N"
   line_code <- '10'
+  
+  length_time <- Sys.time() - start
+  print(paste0('Making URL...', length_time))
   
   url <- make_get_url(dataset_name
                       , dataset
                       , line_code
                       , api_key)
   
+  length_time <- Sys.time() - start
+  print('URL made!')
+  print(paste0('Making API call...', length_time))
+  
   req <- call_to_list(url)
+  length_time <- Sys.time() - start
+  print('Call made! Response received.')
+  print(paste0('Formatting JSON to a dataframe...', length_time))
+  
   dat <- as.data.frame(req$BEAAPI$Results$Data[1])
   for (j in 2:length(req$BEAAPI$Results$Data)) {
     # Append the API result to the data frame
     r <- as.data.frame(req$BEAAPI$Results$Data[j])
     dat <- dplyr::bind_rows(dat,r)
   }
+  length_time <- Sys.time() - start
+  print('Formatting complete!')
+  print(paste0('Aggregating to state and year...', length_time))
   
   dat <- agg_state_year(data = dat)
+  
+  length_time <- Sys.time() - start
+  print('Filtering to desired year...')
+  
   dat <- filter_year(data = dat, start = start_year, end = end_year)
+  length_time <- Sys.time() - start
+  print(paste0('Finished!', length_time))
   return(dat)
 }
 
@@ -130,17 +145,29 @@ tot_employ_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
 #' @export
 
 gdp_cur_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
-  
+  start <- Sys.time()
   dataset_name <- "Regional"
   dataset <- "CAGDP1"
   line_code <- '3'
+  
+  length_time <- Sys.time() - start
+  print(paste0('Making URL...', length_time))
   
   url <- make_get_url(dataset_name
                       , dataset
                       , line_code
                       , api_key)
   
+  length_time <- Sys.time() - start
+  print('URL made!')
+  print(paste0('Making API call...', length_time))
+  
   req <- call_to_list(url)
+  
+  length_time <- Sys.time() - start
+  print('Call made! Response received.')
+  print(paste0('Formatting JSON to a dataframe...', length_time))
+  
   dat <- as.data.frame(req$BEAAPI$Results$Data[1])
   for (j in 2:length(req$BEAAPI$Results$Data)) {
     # Append the API result to the data frame
@@ -148,8 +175,17 @@ gdp_cur_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
     dat <- dplyr::bind_rows(dat,r)
   }
   
+  length_time <- Sys.time() - start
+  print('Formatting complete!')
+  print(paste0('Aggregating to state and year...', length_time))
+  
   dat <- agg_state_year(data = dat)
+  length_time <- Sys.time() - start
+  print('Filtering to desired year...')
   dat <- filter_year(data = dat, start = start_year, end = end_year)
+  
+  length_time <- Sys.time() - start
+  print(paste0('Finished!', length_time))
   return(dat)
 }
 

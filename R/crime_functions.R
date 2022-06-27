@@ -7,7 +7,6 @@
 #' @import janitor
 #' @import tm
 #' @import imputeTS
-#' @import plyr
 
 #' @title get_url
 #' @param year year of data desired from 2006-2019 excluding 2008 and 2016

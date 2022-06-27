@@ -12,7 +12,7 @@ make_get_url(dataset_name = "", dataset = "", line_code = "", api_key = "")
 }}
 
 \item{dataset}{\itemize{
-\item the section of the data for the bea data
+\item the section of the \%>\% for the bea data
 }}
 
 \item{line_code}{\itemize{

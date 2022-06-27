@@ -59,7 +59,7 @@ clean_data <- function(data, year){
   
   ## split the State column into two columns for State and Metropolitan area
   df1 <- df1 |>
-    dplyr::separate(state, c("state", "area_type"))
+    tidyr::separate(state, c("state", "area_type"))
     #confirm that this is a dplyr function
   
   ## have all states and area types repeat in the empty rows beneath them 

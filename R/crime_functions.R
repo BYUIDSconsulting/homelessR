@@ -19,6 +19,9 @@ get_url <- function(year){
   if (year >= 2017) {
     url = paste0("https://ucr.fbi.gov/crime-in-the-u.s/", year, "/crime-in-the-u.s.-", year, "/tables/table-10/table-10.xls")
   }
+  else if (year == 2016){
+    url = paste0("https://ucr.fbi.gov/crime-in-the-u.s/", year, "/crime-in-the-u.s.-", year, "/tables/table-8/table-8.xls")
+  }
   else if (year == 2015 | year == 2013){
     url = paste0("https://ucr.fbi.gov/crime-in-the-u.s/", year, "/crime-in-the-u.s.-", year, "/tables/table-10/table_10_offenses_known_to_law_enforcement_by_state_by_metropolitan_and_nonmetropolitan_counties_", year, ".xls")
   }

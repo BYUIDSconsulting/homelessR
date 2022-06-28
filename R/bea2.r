@@ -116,7 +116,7 @@ tot_employ_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
   req <- call_to_list(url)
   
   print('Call made! Response received.')
-  print(paste0('Formatting JSON to a dataframe...', length_time))
+  print('Formatting JSON to a dataframe...')
   
   dat <- as.data.frame(req$BEAAPI$Results$Data[1])
   for (j in 2:length(req$BEAAPI$Results$Data)) {

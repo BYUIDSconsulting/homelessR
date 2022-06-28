@@ -102,7 +102,7 @@ tot_employ_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
   line_code <- '10'
   
   
-  print(paste0('Making URL...', length_time))
+  print('Making URL...')
   
   url <- make_get_url(dataset_name
                       , dataset
@@ -111,7 +111,7 @@ tot_employ_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
   
   
   print('URL made!')
-  print(paste0('Making API call...', length_time))
+  print('Making API call...')
   
   req <- call_to_list(url)
   
@@ -126,7 +126,7 @@ tot_employ_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
   }
   
   print('Formatting complete!')
-  print(paste0('Aggregating to state and year...', length_time))
+  print('Aggregating to state and year...')
   
   dat <- agg_state_year(data = dat, 'jobs')
   
@@ -135,7 +135,7 @@ tot_employ_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
   
   dat <- filter_year(data = dat, start = start_year, end = end_year)
   
-  print(paste0('Finished!', length_time))
+  print('Finished!')
   return(dat)
 }
 
@@ -153,7 +153,7 @@ gdp_cur_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
   line_code <- '3'
   
   
-  print(paste0('Making URL...', length_time))
+  print('Making URL...')
   
   url <- make_get_url(dataset_name
                       , dataset
@@ -162,13 +162,13 @@ gdp_cur_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
   
   
   print('URL made!')
-  print(paste0('Making API call...', length_time))
+  print('Making API call...')
   
   req <- call_to_list(url)
   
   
   print('Call made! Response received.')
-  print(paste0('Formatting JSON to a dataframe...', length_time))
+  print('Formatting JSON to a dataframe...')
   
   dat <- as.data.frame(req$BEAAPI$Results$Data[1])
   for (j in 2:length(req$BEAAPI$Results$Data)) {

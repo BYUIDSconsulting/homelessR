@@ -80,12 +80,11 @@ agg_state_year <- function(data, type_of_dataset = '') {
                          DataValue = tidyr::replace_na(DataValue, 0),
                          GeoName = stringr::str_replace(GeoName, '\\*', ''),
                          state = stringr::str_extract(GeoName, '[[:upper:]$]{2}')) |>
+           dplyr::select(TimePeriod, col_name, state) |>
+           dplyr::group_by(state, TimePeriod) |>
+           dplyr::mutate(DataValue = sum(DataValue)) |>
            dplyr::rename(Year = TimePeriod) |>
            dplyr::rename(col_name = DataValue) |>
-           dplyr::select(Year, col_name, state) |>
-           dplyr::group_by(state, Year) |>
-           dplyr::mutate(col_temp = sum(col_name)) |>
-           dplyr::rename(col_name = col_temp) |>
            dplyr::distinct()
   )
 }

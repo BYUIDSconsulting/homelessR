@@ -84,7 +84,8 @@ agg_state_year <- function(data, type_of_dataset = '') {
            dplyr::rename(col_name = DataValue) |>
            dplyr::select(Year, col_name, state) |>
            dplyr::group_by(state, Year) |>
-           dplyr::mutate(paste0("num_of_", type_of_dataset) = sum(col_name)) |>
+           dplyr::mutate(col_temp = sum(col_name)) |>
+           dplyr::rename(col_name = col_temp) |>
            dplyr::distinct()
   )
 }

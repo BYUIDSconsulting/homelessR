@@ -11,6 +11,14 @@ hud_data <- function(y, url1= 'https://www.huduser.gov/portal/sites/default/file
   hud <- hud[-57,]
 }
 
+#' @title convert_char_to_num_cols
+#' @param data
+#' @param column_name
+
+convert_char_to_num_cols <- function(data) {
+  for (i in 3:28) {data[,i] <- as.numeric(data[,i])}
+  return(data)
+}
 
 
 #' @title Gather data from 2007 - 2020
@@ -39,5 +47,6 @@ gather_hud_data <- function(){
   result <- rbind(da2007, da2008, da2009, da2010, da2011, da2012, da2013,
                   da2014, da2015, da2016, da2017, da2018, da2019, da2020) |>
     dplyr::rename(state = State)
+  result <- convert_char_to_num_cols(result)  
 }
 

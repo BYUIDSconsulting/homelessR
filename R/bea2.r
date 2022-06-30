@@ -134,6 +134,7 @@ tot_employ_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
   dat <- filter_year(data = dat, start = start_year, end = end_year)
   length_time <- Sys.time() - start
   print(paste0('Finished!', length_time))
+  dat <- ST_to_State(dat)
   return(dat)
 }
 
@@ -186,6 +187,25 @@ gdp_cur_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
   
   length_time <- Sys.time() - start
   print(paste0('Finished!', length_time))
+  dat <- ST_to_State(dat)
   return(dat)
 }
+
+#' @title ST_to_State
+#' @param dataframe a df with a column named "state"
+#' @return The same dataframe but with the full statename
+ST_to_State < function(dataframe) {
+  state_name <- append(append(append(append(append
+                (append(append(append(append(state.name, 'American Samoa'), 'Guam'),
+                'Marshall Islands'), 'Micronesia'), 'Northern Mariana Islands'),'Palau'),
+                'Puerto Rico'), 'Virgin Islands'), 'District of Columbia')
+  
+  state_abb <- append(append(append(append(append(
+               append(append(append(append(state.abb,
+               'AS'),'GU'),'MH'),'FM'),'MP'),'PW'),'PR'),'VI'), 'DC')
+  
+  fixed_df <- dataframe |> mutate(state = state_name[match(dataframe$state, state_abb)])
+  return(fixed_df)
+} 
+
 

@@ -102,7 +102,7 @@ ST_to_State <- function(dataframe) {
     append(append(append(append(state.abb,
                                 'AS'),'GU'),'MH'),'FM'),'MP'),'PW'),'PR'),'VI'), 'DC')
   
-  fixed_df <- dataframe |> dplyr::mutate(dataframe$state = state_name[match(dataframe$state, state_abb)])
+  fixed_df <- dataframe |> dplyr::mutate(state = state_name[match(dataframe$state, state_abb)])
   return(fixed_df)
 } 
 
@@ -151,9 +151,19 @@ tot_employ_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
   print('Filtering to desired year...')
   
   dat <- filter_year(data = dat, start = start_year, end = end_year)
-  dat <- ST_to_State(dat)
+  
+  state_name <- append(append(append(append(append
+                                            (append(append(append(append(state.name, 'American Samoa'), 'Guam'),
+                                                           'Marshall Islands'), 'Micronesia'), 'Northern Mariana Islands'),'Palau'),
+                                     'Puerto Rico'), 'Virgin Islands'), 'District of Columbia')
+  
+  state_abb <- append(append(append(append(append(
+    append(append(append(append(state.abb,
+                                'AS'),'GU'),'MH'),'FM'),'MP'),'PW'),'PR'),'VI'), 'DC')
+  
+  dat2 <- dat |> dplyr::mutate(state = state_name[match(dat$state, state_abb)])
   print('Finished!')
-  return(dat)
+  return(dat2)
 }
 
 #' @title gdp_cur_bea

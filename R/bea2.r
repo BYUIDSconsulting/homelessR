@@ -154,7 +154,7 @@ tot_employ_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
   
   #dat2 <- ST_to_State(dat)
   print('Finished!')
-  return(dat2)
+  return(dat)
 }
 
 #' @title gdp_cur_bea

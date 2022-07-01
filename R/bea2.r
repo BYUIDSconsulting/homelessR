@@ -102,7 +102,7 @@ ST_to_State <- function(dataframe) {
     append(append(append(append(state.abb,
                                 'AS'),'GU'),'MH'),'FM'),'MP'),'PW'),'PR'),'VI'), 'DC')
   
-  fixed_df <- dataframe |> dplyr::mutate(state = state_name[match(dataframe$state, state_abb)])
+  fixed_df <- dataframe |> dplyr::mutate(dataframe$state = state_name[match(dataframe$state, state_abb)])
   return(fixed_df)
 } 
 

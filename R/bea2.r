@@ -161,7 +161,7 @@ tot_employ_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
     append(append(append(append(state.abb,
                                 'AS'),'GU'),'MH'),'FM'),'MP'),'PW'),'PR'),'VI'), 'DC')
   
-  dat2 <- dat |> dplyr::mutate(state = state_name[match(dat$state, state_abb)])
+  dat2 <- dat |> dplyr::mutate(state = state_name[match(state, state_abb)])
   print('Finished!')
   return(dat2)
 }

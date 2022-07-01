@@ -152,7 +152,7 @@ tot_employ_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
   
   dat <- filter_year(data = dat, start = start_year, end = end_year)
   
-  dat2 <- ST_to_State(dat)
+  #dat2 <- ST_to_State(dat)
   print('Finished!')
   return(dat2)
 }
@@ -202,7 +202,7 @@ gdp_cur_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
   
   print('Filtering to desired year...')
   dat <- filter_year(data = dat, start = start_year, end = end_year)
-  dat <- ST_to_State(dat)
+  #dat <- ST_to_State(dat)
   print('Finished!')
   return(dat)
 }

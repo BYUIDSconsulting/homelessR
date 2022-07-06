@@ -45,7 +45,7 @@ get_url <- function(start_year=2006, end_year=2017){
     temp = tempfile()
     download.file(url, destfile = temp, mode = "wb")
     data <- readxl::read_excel(temp)
-    one_year_of_data <- clean_data(data, year)
+    one_year_of_data <- clean_data(data = data, year = year)
     
     if (nrow(temp) == 0) {
       temp_data <- one_year_of_data
@@ -91,7 +91,7 @@ clean_data <- function(data, year){
   states <- c("Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", 
 "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming")
   df3 <- df2 |>
-    filter(state %in% str_to_upper(states))
+    filter(df2$state %in% stringr::str_to_upper(states))
   
   ## add a column with the year of data
   df3$year <- year

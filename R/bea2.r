@@ -73,7 +73,7 @@ filter_year <- function(data, start = 0000, end = 9999) {
 agg_state_year <- function(data, type_of_dataset = '') {
   col_name <- paste0("num_of_", type_of_dataset)
   return(data |>
-           dplyr::mutate(DataValue = str_replace_all(DataValue, ',', ''), 
+           dplyr::mutate(DataValue = stringr::str_replace_all(DataValue, ',', ''), 
                          TimePeriod = as.numeric(TimePeriod), 
                          DataValue = stringr::str_replace(DataValue, '\\(NA\\)', '0'),
                          DataValue = as.numeric(DataValue),

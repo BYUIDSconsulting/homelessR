@@ -47,8 +47,8 @@ get_census_data <- function(table = "B01001", start_year=2010, end_year=2019,  o
     
     data5 <- data4 |> 
       dplyr::filter(stringr::str_sub(name, -1, -1) == "E") |> 
-      dplyr::mutate(name = substr(name,1,nchar(name)-1)) |>
-      dplyr::mutate(state = state.abb[grep(state, state.name)])
+      dplyr::mutate(name = substr(name,1,nchar(name)-1)) #|>
+      # dplyr::mutate(state = state.abb[grep(data4$state, state.name)])
       
     #I am a resting hippo
     data6 <- dplyr::left_join(data5, new_var, by="name") |>
@@ -76,6 +76,6 @@ get_census_data <- function(table = "B01001", start_year=2010, end_year=2019,  o
 #' @param apikey, your personal api key, you must ask for this on the census website
 #' @export
 establish_census_api <- function(apikey) {
-  tidy_census::census_api_key(apikey, install = TRUE, overwrite = TRUE)
+  tidycensus::census_api_key(apikey, install = TRUE, overwrite = TRUE)
   readRenviron("~/.Renviron")
 }

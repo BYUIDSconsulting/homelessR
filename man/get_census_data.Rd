@@ -8,6 +8,7 @@ get_census_data(
   table = "B01001",
   start_year = 2010,
   end_year = 2019,
+  output = "wide",
   geography = "state",
   survey = "acs1"
 )
@@ -19,12 +20,9 @@ get_census_data(
 
 \item{end_year}{the latest year you would like data from}
 
-\item{geography}{state, county, ect.}
+\item{output}{tidy or wide}
 
-\item{survey}{acs1 or acs5}
-}
-\value{
-the data set
+\item{geography}{state, county, ect.}
 }
 \description{
 download census data

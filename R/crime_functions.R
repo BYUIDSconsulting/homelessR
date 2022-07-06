@@ -57,7 +57,7 @@ clean_data <- function(data, year){
   df <- data[-c(1, 2, 3),]
   df1 <- df |>
     janitor::row_to_names(row_number = 1) |>
-    clean_names()
+    janitor::clean_names()
   
   ## split the State column into two columns for State and Metropolitan area
   df1 <- df1 |>

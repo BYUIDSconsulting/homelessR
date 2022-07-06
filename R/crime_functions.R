@@ -13,38 +13,47 @@
 #' @author Becca Ebersole
 #' @example get_url(2019)
 #' @export
-get_url <- function(year){
-  year = year
-  if (year >= 2017) {
-    url = paste0("https://ucr.fbi.gov/crime-in-the-u.s/", year, "/crime-in-the-u.s.-", year, "/tables/table-10/table-10.xls")
+get_url <- function(start_year=2006, end_year=2017){
+  years = start_year:end_year
+  temp_data <- data.frame(matrix(ncol = 0, nrow = 0))
+  for (year in years){
+    if (year >= 2017) {
+      url = paste0("https://ucr.fbi.gov/crime-in-the-u.s/", year, "/crime-in-the-u.s.-", year, "/tables/table-10/table-10.xls")
+    }
+    else if (year == 2016){
+      url = paste0("https://ucr.fbi.gov/crime-in-the-u.s/", year, "/crime-in-the-u.s.-", year, "/tables/table-8/table-8.xls")
+    }
+    else if (year == 2015 | year == 2013){
+      url = paste0("https://ucr.fbi.gov/crime-in-the-u.s/", year, "/crime-in-the-u.s.-", year, "/tables/table-10/table_10_offenses_known_to_law_enforcement_by_state_by_metropolitan_and_nonmetropolitan_counties_", year, ".xls")
+    }
+    else if (year == 2014){
+      url = paste0("https://ucr.fbi.gov/crime-in-the-u.s/", year, "/crime-in-the-u.s.-", year, "/tables/table-10/Table_10_Offenses_Known_to_Law_Enforcement_by_State_by_Metropolitan_and_Nonmetropolitan_Counties_", year, ".xls")
+    }
+    else if (year == 2012){
+      url = paste0("https://ucr.fbi.gov/crime-in-the-u.s/", year, "/crime-in-the-u.s.-", year, "/tables/10tabledatadecpdf/table_10_offenses_known_to_law_enforcement_by_state_by_metropolitan_and_nonmetropolitan_counties_", year, ".xls") 
+    }
+    else if (year == 2011){
+      url = paste0("https://ucr.fbi.gov/crime-in-the-u.s/", year, "/crime-in-the-u.s.-", year, "/tables/table_10_offenses_known_to_law_enforcement_by_state_by_metropolitan_and_nonmetropolitan_counties_", year, ".xls")
+    }
+    else if (year == 2010) {
+      url <- paste0("https://ucr.fbi.gov/crime-in-the-u.s/", year, "/crime-in-the-u.s.-", year, "/tables/10tbl10.xls")
+    }
+    else if (year == 2009 | year == 2008 | year == 2007 | year ==2006){
+      last_two = substring(year, 2)
+      url = paste0("https://www2.fbi.gov/ucr/cius", year, "/data/documents/", substring(year, 3), "tbl10.xls")
+    }
+    temp = tempfile()
+    download.file(url, destfile = temp, mode = "wb")
+    data <- readxl::read_excel(temp)
+    one_year_of_data <- clean_data(data, year)
+    
+    if (nrow(temp) == 0) {
+      temp_data <- one_year_of_data
+    } else {
+      temp_data <- rbind(temp_data, one_year_of_data)
+    }
   }
-  else if (year == 2016){
-    url = paste0("https://ucr.fbi.gov/crime-in-the-u.s/", year, "/crime-in-the-u.s.-", year, "/tables/table-8/table-8.xls")
-  }
-  else if (year == 2015 | year == 2013){
-    url = paste0("https://ucr.fbi.gov/crime-in-the-u.s/", year, "/crime-in-the-u.s.-", year, "/tables/table-10/table_10_offenses_known_to_law_enforcement_by_state_by_metropolitan_and_nonmetropolitan_counties_", year, ".xls")
-  }
-  else if (year == 2014){
-    url = paste0("https://ucr.fbi.gov/crime-in-the-u.s/", year, "/crime-in-the-u.s.-", year, "/tables/table-10/Table_10_Offenses_Known_to_Law_Enforcement_by_State_by_Metropolitan_and_Nonmetropolitan_Counties_", year, ".xls")
-  }
-  else if (year == 2012){
-    url = paste0("https://ucr.fbi.gov/crime-in-the-u.s/", year, "/crime-in-the-u.s.-", year, "/tables/10tabledatadecpdf/table_10_offenses_known_to_law_enforcement_by_state_by_metropolitan_and_nonmetropolitan_counties_", year, ".xls") 
-  }
-  else if (year == 2011){
-    url = paste0("https://ucr.fbi.gov/crime-in-the-u.s/", year, "/crime-in-the-u.s.-", year, "/tables/table_10_offenses_known_to_law_enforcement_by_state_by_metropolitan_and_nonmetropolitan_counties_", year, ".xls")
-  }
-  else if (year == 2010) {
-    url <- paste0("https://ucr.fbi.gov/crime-in-the-u.s/", year, "/crime-in-the-u.s.-", year, "/tables/10tbl10.xls")
-  }
-  else if (year == 2009 | year == 2008 | year == 2007 | year ==2006){
-    last_two = substring(year, 2)
-    url = paste0("https://www2.fbi.gov/ucr/cius", year, "/data/documents/", substring(year, 3), "tbl10.xls")
-  }
-  temp = tempfile()
-  download.file(url, destfile = temp, mode = "wb")
-  data <- readxl::read_excel(temp)
-  final_data <- clean_data(data, year)
-  return(final_data)
+  return(temp_data)
 }
 
 #'@title clean_data

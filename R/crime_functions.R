@@ -107,9 +107,8 @@ clean_data <- function(data, year){
   }
   else if (year == 2012 | year == 2011 | year == 2010 | year == 2009 | year == 2007 | year == 2006) {
     df3 <- df3 |>
-      dplyr::rename(c('forcible_rape' = 'rape'))
+      dplyr::rename('forcible_rape' = 'rape')
   }
-  #View(df3)
   return(df3)
 }
 

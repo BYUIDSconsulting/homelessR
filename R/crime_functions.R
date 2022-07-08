@@ -45,7 +45,12 @@ get_url <- function(start_year=2006, end_year=2017){
     temp = tempfile()
     download.file(url, destfile = temp, mode = "wb")
     data <- readxl::read_excel(temp)
+    
+    print(colnames(data)) #temporary line
+    
     one_year_of_data <- clean_data(data = data, year = year)
+    
+    print(colnames(one_year_of_data)) #temporary line
     
     if (nrow(temp_data) == 0) {
       temp_data <- one_year_of_data

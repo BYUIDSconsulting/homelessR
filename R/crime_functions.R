@@ -47,7 +47,7 @@ get_url <- function(start_year=2006, end_year=2017){
     data <- readxl::read_excel(temp)
     one_year_of_data <- clean_data(data = data, year = year)
     
-    if (nrow(temp) == 0) {
+    if (nrow(temp_data) == 0) {
       temp_data <- one_year_of_data
     } else {
       temp_data <- rbind(temp_data, one_year_of_data)

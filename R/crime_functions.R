@@ -52,7 +52,7 @@ get_url <- function(start_year=2006, end_year=2017){
     
     print(colnames(one_year_of_data)) #temporary line
     one_year_of_data = subset(one_year_of_data, select = c(state,area_type, county, violent_crime, murder_and_nonnegligent_manslaughter,
-                    forcible_rape,robbery, aggravated_assault, property_crime, burglary, larceny_theft, motor_vehicle_theft, arson, year) )
+                    rape,robbery, aggravated_assault, property_crime, burglary, larceny_theft, motor_vehicle_theft, arson, year) )
     
     
     if (nrow(temp_data) == 0) {

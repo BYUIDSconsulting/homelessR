@@ -13,7 +13,7 @@
 #' @author Becca Ebersole
 #' @example get_url(2019)
 #' @export
-get_url <- function(start_year=2006, end_year=2017){
+get_url <- function(start_year=2006, end_year=2017, region='county'){
   years = start_year:end_year
   temp_data <- data.frame(matrix(ncol = 0, nrow = 0))
   for (year in years){
@@ -58,6 +58,9 @@ get_url <- function(start_year=2006, end_year=2017){
     } else {
       temp_data <- rbind(temp_data, one_year_of_data)
     }
+  }
+  if (region=='state') {
+    #add aggregation functions here and change default to state. 
   }
   return(temp_data)
 }

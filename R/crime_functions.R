@@ -46,13 +46,13 @@ get_url <- function(start_year=2006, end_year=2017){
     download.file(url, destfile = temp, mode = "wb")
     data <- readxl::read_excel(temp)
     
-    print(colnames(data)) #temporary line
+    #print(colnames(data)) #temporary line
     
     one_year_of_data <- clean_data(data = data, year = year)
     
-    print(colnames(one_year_of_data)) #temporary line
-    one_year_of_data = subset(one_year_of_data, select = c(state,area_type, county, violent_crime, murder_and_nonnegligent_manslaughter,
-                    rape,robbery, aggravated_assault, property_crime, burglary, larceny_theft, motor_vehicle_theft, arson, year) )
+    #print(colnames(one_year_of_data)) #temporary line
+    #one_year_of_data = subset(one_year_of_data, select = c(state,area_type, county, violent_crime, murder_and_nonnegligent_manslaughter,
+    #                rape,robbery, aggravated_assault, property_crime, burglary, larceny_theft, motor_vehicle_theft, arson, year) )
     
     
     if (nrow(temp_data) == 0) {
@@ -113,7 +113,7 @@ clean_data <- function(data, year){
     df3$rape <- df3$rape_legacy_definition_ + df3$rape_revised_definition_
     df3 <- df3[, -c(6:7)]
   }
-  else if (year == 2012 | year == 2011 | year == 2010 | year == 2009 | year == 2007 | year == 2006) {
+  else if (year <= 2012) {
     df3 <- df3 |>
       dplyr::rename('rape' = 'forcible_rape')
   }

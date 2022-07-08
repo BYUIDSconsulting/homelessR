@@ -46,11 +46,11 @@ get_url <- function(start_year=2006, end_year=2017){
     download.file(url, destfile = temp, mode = "wb")
     data <- readxl::read_excel(temp)
     
-    #print(colnames(data)) #temporary line
+    print(colnames(data), "first") #temporary line
     
     one_year_of_data <- clean_data(data = data, year = year)
     
-    #print(colnames(one_year_of_data)) #temporary line
+    print(colnames(one_year_of_data), 'second') #temporary line
     #one_year_of_data = subset(one_year_of_data, select = c(state,area_type, county, violent_crime, murder_and_nonnegligent_manslaughter,
     #                rape,robbery, aggravated_assault, property_crime, burglary, larceny_theft, motor_vehicle_theft, arson, year) )
     

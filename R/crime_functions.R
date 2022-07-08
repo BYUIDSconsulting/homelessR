@@ -103,7 +103,7 @@ clean_data <- function(data, year){
   df3$year <- year
   
   ## rename forcible rape to rape
-  if (year <= 2015 & year >= 2013) {
+  if (year <= 2017 & year >= 2013) {
     df3$`rape_legacy_definition_` <- as.numeric(df3$`rape_legacy_definition_`)
     df3$`rape_revised_definition_` <- as.numeric(df3$`rape_revised_definition_`)
     df3[["rape_legacy_definition_"]][is.na(df3[["rape_legacy_definition_"]])] <- 0

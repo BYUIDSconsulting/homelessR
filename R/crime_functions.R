@@ -60,7 +60,18 @@ get_url <- function(start_year=2006, end_year=2017, region='county'){
     }
   }
   if (region=='state') {
-    #add aggregation functions here and change default to state. 
+    temp_data = temp_data %>% group_by(state, year) %>%
+      summarise(violent_crime = sum(violent_crime),
+                murder_and_nonnegligent_manslaughter = sum(murder_and_nonnegligent_manslaughter),
+                rape = sum(rape),
+                robbery = sum(robbery),
+                aggravated_assault = sum(aggravated_assault),
+                property_crime = sum(property_crime),
+                burglary = sum(burglary),
+                larceny_theft = sum(larceny_theft),
+                motor_vehicle_theft = sum(motor_vehicle_theft),
+                arson = sum(arson),
+                .groups = 'drop')
   }
   return(temp_data)
 }

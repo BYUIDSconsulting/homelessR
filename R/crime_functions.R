@@ -61,16 +61,16 @@ get_url <- function(start_year=2006, end_year=2017, region='county'){
   }
   if (region=='state') {
     temp_data = temp_data %>% group_by(state, year) %>%
-      summarise(violent_crime = sum(violent_crime),
-                murder_and_nonnegligent_manslaughter = sum(murder_and_nonnegligent_manslaughter),
-                rape = sum(rape),
-                robbery = sum(robbery),
-                aggravated_assault = sum(aggravated_assault),
-                property_crime = sum(property_crime),
-                burglary = sum(burglary),
-                larceny_theft = sum(larceny_theft),
-                motor_vehicle_theft = sum(motor_vehicle_theft),
-                arson = sum(arson),
+      summarise(violent_crime = sum(as.integer(violent_crime)),
+                murder_and_nonnegligent_manslaughter = sum(as.integer(murder_and_nonnegligent_manslaughter)),
+                rape = sum(as.integer(rape)),
+                robbery = sum(as.integer(robbery)),
+                aggravated_assault = sum(as.integer(aggravated_assault)),
+                property_crime = sum(as.integer(property_crime)),
+                burglary = sum(as.integer(burglary)),
+                larceny_theft = sum(as.integer(larceny_theft)),
+                motor_vehicle_theft = sum(as.integer(motor_vehicle_theft)),
+                arson = sum(as.integer(arson)),
                 .groups = 'drop')
   }
   return(temp_data)

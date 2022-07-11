@@ -13,7 +13,7 @@
 #' @author Becca Ebersole
 #' @example get_url(2019)
 #' @export
-get_url <- function(start_year=2006, end_year=2017, region='county'){
+get_url <- function(start_year=2006, end_year=2017, region='state'){
   years = start_year:end_year
   temp_data <- data.frame(matrix(ncol = 0, nrow = 0))
   for (year in years){

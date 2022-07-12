@@ -13,7 +13,7 @@
 #' @author Becca Ebersole
 #' @example get_url(2019)
 #' @export
-get_url <- function(start_year=2006, end_year=2017){
+get_url <- function(start_year=2006, end_year=2017, region='state'){
   years = start_year:end_year
   temp_data <- data.frame(matrix(ncol = 0, nrow = 0))
   for (year in years){
@@ -45,13 +45,34 @@ get_url <- function(start_year=2006, end_year=2017){
     temp = tempfile()
     download.file(url, destfile = temp, mode = "wb")
     data <- readxl::read_excel(temp)
+    
     one_year_of_data <- clean_data(data = data, year = year)
     
-    if (nrow(temp) == 0) {
+    print(colnames(one_year_of_data)) #temporary line
+    one_year_of_data = subset(one_year_of_data, select = c(state,area_type, county, violent_crime, murder_and_nonnegligent_manslaughter,
+                    rape,robbery, aggravated_assault, property_crime, burglary, larceny_theft, motor_vehicle_theft, arson, year) )
+    
+    
+    if (nrow(temp_data) == 0) {
       temp_data <- one_year_of_data
     } else {
       temp_data <- rbind(temp_data, one_year_of_data)
     }
+  }
+  if (region=='state') {
+    temp_data[is.na(temp_data)] = '0'
+    temp_data = temp_data %>% group_by(state, year) %>%
+      summarise(violent_crime = sum(as.integer(violent_crime)),
+                murder_and_nonnegligent_manslaughter = sum(as.integer(murder_and_nonnegligent_manslaughter)),
+                rape = sum(as.integer(rape)),
+                robbery = sum(as.integer(robbery)),
+                aggravated_assault = sum(as.integer(aggravated_assault)),
+                property_crime = sum(as.integer(property_crime)),
+                burglary = sum(as.integer(burglary)),
+                larceny_theft = sum(as.integer(larceny_theft)),
+                motor_vehicle_theft = sum(as.integer(motor_vehicle_theft)),
+                arson = sum(as.integer(arson)),
+                .groups = 'drop')
   }
   return(temp_data)
 }
@@ -89,7 +110,7 @@ clean_data <- function(data, year){
   
   ## remove the rows about the subscripts
   states <- c("Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", 
-"Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming")
+              "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming")
   df3 <- df2 |>
     filter(df2$state %in% stringr::str_to_upper(states))
   
@@ -97,7 +118,7 @@ clean_data <- function(data, year){
   df3$year <- year
   
   ## rename forcible rape to rape
-  if (year <= 2015 & year >= 2013) {
+  if (year <= 2016 & year >= 2013) {
     df3$`rape_legacy_definition_` <- as.numeric(df3$`rape_legacy_definition_`)
     df3$`rape_revised_definition_` <- as.numeric(df3$`rape_revised_definition_`)
     df3[["rape_legacy_definition_"]][is.na(df3[["rape_legacy_definition_"]])] <- 0
@@ -105,11 +126,11 @@ clean_data <- function(data, year){
     df3$rape <- df3$rape_legacy_definition_ + df3$rape_revised_definition_
     df3 <- df3[, -c(6:7)]
   }
-  else if (year == 2012 | year == 2011 | year == 2010 | year == 2009 | year == 2007 | year == 2006) {
+  else if (year <= 2012) {
     df3 <- df3 |>
-      dplyr::rename(c('forcible_rape' = 'rape'))
+      dplyr::rename('rape' = 'forcible_rape')
   }
-  #View(df3)
   return(df3)
 }
+
 

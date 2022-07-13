@@ -41,7 +41,6 @@ ST_to_State <- function(dataframe) {
 #' @examples df <- gather_hud_data()
 #' @import dplyr
 #' @export 
-
 gather_hud_data <- function(){
   da2007 <- hud_data('2007')
   columns <-  colnames(da2007)

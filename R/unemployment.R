@@ -4,7 +4,7 @@
 #' @import dplyr
 #' @import tidyr
 #' @param url1 - The URL pulls from Iowa state university data set of annual unemployment. 
-
+#' @export 
 unemployment <- function(url1 = 'http://www.icip.iastate.edu/sites/default/files/uploads/tables/employment/emp-unemployment.xls'){
   unemployment = gdata::read.xls(data_source, sheet = 2)
 

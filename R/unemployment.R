@@ -6,7 +6,7 @@
 #' @param url1 - The URL pulls from Iowa state university data set of annual unemployment. 
 #' @export 
 unemployment <- function(url1 = 'http://www.icip.iastate.edu/sites/default/files/uploads/tables/employment/emp-unemployment.xls'){
-  unemployment = gdata::read.xls(data_source, sheet = 2)
+  unemployment = gdata::read.xls(url1, sheet = 2)
 
   unemployment <- unemployment[-c(1,2,3, 5, 57,58,59,60,61,62,63),]
   unemployment <- unemployment |>
@@ -15,6 +15,6 @@ unemployment <- function(url1 = 'http://www.icip.iastate.edu/sites/default/files
   unemployment <- dplyr::rename(unemployment, state = Area)
   unemployment <- unemployment[-1]
   unemp <- unemployment |>
-    tidyr::pivot_longer(!State, names_to = 'Year', values_to = 'Unimployment')
+    tidyr::pivot_longer(!state, names_to = 'Year', values_to = 'Unemployment')
 }
 

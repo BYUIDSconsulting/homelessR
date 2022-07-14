@@ -39,7 +39,8 @@ ST_to_State <- function(dataframe) {
 
 #' @title Gather data from 2007 - 2020
 #' @examples df <- gather_hud_data()
-#' @import dplyr
+#' @import dplyr 
+#' @import usethis
 #' @export 
 gather_hud_data <- function(){
   da2007 <- hud_data('2007')
@@ -64,7 +65,6 @@ gather_hud_data <- function(){
     dplyr::rename(state = State)
   result <- ST_to_State(result)
   result <- convert_char_to_num_cols(result)  
-  setwd('~/School/Consulting/PW_homelessness_SP22/homelessR/R')
-  save(result, file = '../data/hud_data.rda')
+  usethis::use_data(result, overwrite = TRUE)
 }
 

@@ -4,7 +4,7 @@
 \alias{agg_state_year}
 \title{agg_state_year}
 \usage{
-agg_state_year(data, type_of_dataset = "")
+agg_state_year(data)
 }
 \arguments{
 \item{data}{\itemize{

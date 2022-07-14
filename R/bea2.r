@@ -7,7 +7,7 @@
 #' @import tidyr
 #' @import stringr
 #' @import magrittr
-#' 
+#' @import tidyselect
 #' 
 #' @title call_to_list
 #' @param call_url the API url that will be sent to the bea.gov API
@@ -70,8 +70,7 @@ filter_year <- function(data, start = 0000, end = 9999) {
 #' @param data - the dataset from the bea.gov API that needs to be aggregated.
 #' @return returns the dataset aggregated to data values per state per year.  
 
-agg_state_year <- function(data, type_of_dataset = '') {
-  col_name <- paste0("num_of_", type_of_dataset)
+agg_state_year <- function(data) {
   return(data |>
            dplyr::mutate(DataValue = stringr::str_replace_all(DataValue, ',', ''), 
                          TimePeriod = as.numeric(TimePeriod), 
@@ -84,7 +83,6 @@ agg_state_year <- function(data, type_of_dataset = '') {
            dplyr::group_by(state, TimePeriod) |>
            dplyr::mutate(DataValue = sum(DataValue)) |>
            dplyr::rename(Year = TimePeriod) |>
-           dplyr::rename(col_name = DataValue) |>
            dplyr::distinct()
   )
 }
@@ -145,8 +143,9 @@ tot_employ_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
   print('Formatting complete!')
   print('Aggregating to state and year...')
   
-  dat <- agg_state_year(data = dat, 'jobs')
-  
+  dat <- agg_state_year(data = dat)
+  dat <- dat|>
+    dplyr::rename(num_of_jobs = DataValue)
   
   print('Filtering to desired year...')
   
@@ -154,7 +153,9 @@ tot_employ_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
   
   dat2 <- ST_to_State(dat)
   print('Finished!')
-  return(dat2)
+  setwd("~/School/Consulting/PW_homelessness_SP22/homelessR/R")
+  save(dat2, file = '../data/total_employment.rda')
+  # return(dat2)
 }
 
 #' @title gdp_cur_bea
@@ -198,7 +199,9 @@ gdp_cur_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
   print('Formatting complete!')
   print('Aggregating to state and year...')
   
-  dat <- agg_state_year(dat, 'gdp')
+  dat <- agg_state_year(dat)
+  dat <- dat|>
+    dplyr::rename(gdp_per_state_per_year = DataValue)
   
   print('Filtering to desired year...')
   dat <- filter_year(data = dat, start = start_year, end = end_year)

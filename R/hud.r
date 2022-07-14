@@ -64,5 +64,7 @@ gather_hud_data <- function(){
     dplyr::rename(state = State)
   result <- ST_to_State(result)
   result <- convert_char_to_num_cols(result)  
+  setwd('~/School/Consulting/PW_homelessness_SP22/homelessR/R')
+  save(result, file = '../data/hud_data.rda')
 }
 

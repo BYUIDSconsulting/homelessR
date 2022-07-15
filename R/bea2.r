@@ -71,24 +71,19 @@ filter_year <- function(data, start = 0000, end = 9999) {
 #' @return returns the dataset aggregated to data values per state per year.  
 
 agg_state_year <- function(data) {
-  
-  good_data <- data |>
-    dplyr::mutate(DataValue = stringr::str_replace_all(DataValue, ',', ''), 
-                  TimePeriod = as.numeric(TimePeriod), 
-                  DataValue = stringr::str_replace(DataValue, '\\(NA\\)', '0'),
-                  DataValue = as.numeric(DataValue),
-                  DataValue = tidyr::replace_na(DataValue, 0),
-                  GeoName = stringr::str_replace(GeoName, '\\*', ''),
-                  state = stringr::str_extract(GeoName, '[[:upper:]$]{2}')) |>
-    dplyr::select(TimePeriod, DataValue, state) |>
-    dplyr::group_by(state, TimePeriod) |>
-    dplyr::mutate(DataValue = sum(DataValue)) |>
-    dplyr::rename(Year = TimePeriod) |>
-    dplyr::distinct()
-  
-  
-  
-  return(good_data)
+  return(data |>
+           dplyr::mutate(DataValue = stringr::str_replace_all(DataValue, ',', ''), 
+                         TimePeriod = as.numeric(TimePeriod), 
+                         DataValue = stringr::str_replace(DataValue, '\\(NA\\)', '0'),
+                         DataValue = as.numeric(DataValue),
+                         DataValue = tidyr::replace_na(DataValue, 0),
+                         GeoName = stringr::str_replace(GeoName, '\\*', ''),
+                         state = stringr::str_extract(GeoName, '[[:upper:]$]{2}')) |>
+           dplyr::select(TimePeriod, DataValue, state) |>
+           dplyr::group_by(state, TimePeriod) |>
+           dplyr::mutate(DataValue = sum(DataValue)) |>
+           dplyr::rename(Year = TimePeriod) |>
+           dplyr::distinct())
 }
 
 #' @title ST_to_State

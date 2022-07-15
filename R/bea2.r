@@ -73,12 +73,12 @@ filter_year <- function(data, start = 0000, end = 9999) {
 agg_state_year <- function(data) {
   return(data |>
            dplyr::mutate(DataValue = stringr::str_replace_all(data$DataValue, ',', ''), 
-                         TimePeriod = as.numeric(TimePeriod), 
-                         DataValue = stringr::str_replace(DataValue, '\\(NA\\)', '0'),
-                         DataValue = as.numeric(DataValue),
-                         DataValue = tidyr::replace_na(DataValue, 0),
-                         GeoName = stringr::str_replace(GeoName, '\\*', ''),
-                         state = stringr::str_extract(GeoName, '[[:upper:]$]{2}')) |>
+                         TimePeriod = as.numeric(data$TimePeriod), 
+                         DataValue = stringr::str_replace(data$DataValue, '\\(NA\\)', '0'),
+                         DataValue = as.numeric(data$DataValue),
+                         DataValue = tidyr::replace_na(data$DataValue, 0),
+                         GeoName = stringr::str_replace(data$GeoName, '\\*', ''),
+                         state = stringr::str_extract(data$GeoName, '[[:upper:]$]{2}')) |>
            dplyr::select(TimePeriod, DataValue, state) |>
            dplyr::group_by(state, TimePeriod) |>
            dplyr::mutate(DataValue = sum(DataValue)) |>

@@ -153,9 +153,7 @@ tot_employ_bea <- function(api_key ='', start_year = 0000, end_year = 9999) {
   
   dat2 <- ST_to_State(dat)
   print('Finished!')
-  setwd("~/School/Consulting/PW_homelessness_SP22/homelessR/R")
-  save(dat2, file = '../data/total_employment.rda')
-  # return(dat2)
+  return(dat2)
 }
 
 #' @title gdp_cur_bea

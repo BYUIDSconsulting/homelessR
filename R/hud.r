@@ -64,7 +64,6 @@ gather_hud_data <- function(){
                   da2014, da2015, da2016, da2017, da2018, da2019, da2020) |>
     dplyr::rename(state = State)
   result <- ST_to_State(result)
-  result <- convert_char_to_num_cols(result)  
-  usethis::use_data(result, overwrite = TRUE)
+  hud_data <- convert_char_to_num_cols(result)
 }
 

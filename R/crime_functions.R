@@ -74,9 +74,7 @@ get_url <- function(start_year=2006, end_year=2017, region='state'){
                 arson = sum(as.integer(arson)),
                 .groups = 'drop')
   }
-  setwd('~/School/Consulting/PW_homelessness_SP22/homelessR/R')
-  save(result, file = '../data/crime_data.rda')
-  # return(temp_data)
+  return(temp_data)
 }
 
 #'@title clean_data

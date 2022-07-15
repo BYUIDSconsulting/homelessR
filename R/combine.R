@@ -1,10 +1,9 @@
 #' @import dplyr
-#' @title get_url
-#' @param y
+#' @title get_everything
 #' @author Hunter Rogers
-#' @example get_url(2019)
+#' @example get_everything()
 #' @export
-get_url <- function(){
+get_everything <- function(){
   
   data <- get_census_data()
   data2 <- get_hud()

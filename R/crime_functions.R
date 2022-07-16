@@ -61,7 +61,7 @@ get_url <- function(start_year=2006, end_year=2017, region='state'){
   }
   if (region=='state') {
     temp_data[is.na(temp_data)] = '0'
-    temp_data = temp_data %>% group_by(state, year) %>%
+    temp_data = temp_data %>% group_by(state, Year) %>%
       summarise(violent_crime = sum(as.integer(violent_crime)),
                 murder_and_nonnegligent_manslaughter = sum(as.integer(murder_and_nonnegligent_manslaughter)),
                 rape = sum(as.integer(rape)),

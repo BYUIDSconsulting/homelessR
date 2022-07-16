@@ -56,9 +56,8 @@ get_census_data <- function(table = "B01001", start_year=2010, end_year=2019,  o
       dplyr::select(-c(label))
     
     data7 <- data6 |> dplyr::rename(Category = name) |> dplyr::select(-value, value) |> 
-      dplyr::rename(state = NAME) |> dplyr::rename(Year = year) |> dplyr::rename(colnames(data7) = gsub(pattern = ":", replacement = "", x = colnames(data7)))
+      dplyr::rename(state = NAME) |> dplyr::rename(Year = year) 
     
-    #colnames(data7) <- gsub(pattern = ":", replacement = "", x = colnames(data7))
     
     if (nrow(temp) == 0) {
       temp <- data7
@@ -67,6 +66,7 @@ get_census_data <- function(table = "B01001", start_year=2010, end_year=2019,  o
     }
   }
   temp2 <- temp |> tidyr::pivot_wider(names_from = Category, values_from = value)
+  colnames(temp2) <- gsub(pattern = ":", replacement = "", x = colnames(temp2))
   return(temp2)
 }
 

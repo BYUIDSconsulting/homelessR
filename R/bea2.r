@@ -83,8 +83,7 @@ agg_state_year <- function(data) {
            dplyr::group_by(state, TimePeriod) |>
            dplyr::mutate(DataValue = sum(DataValue)) |>
            dplyr::rename(Year = TimePeriod) |>
-           dplyr::distinct()
-  )
+           dplyr::distinct())
 }
 
 #' @title ST_to_State

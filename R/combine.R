@@ -1,15 +1,16 @@
 #' @import dplyr
-#' @title get_url
-#' @param y
+#' @title get_everything
 #' @author Hunter Rogers
-#' @example get_url(2019)
+#' @example get_everything()
 #' @export
-get_url <- function(){
+get_everything <- function(cen_api, bea_api){
+  
+  establish_census_api(cen_api)
   
   data <- get_census_data()
   data2 <- get_hud()
-  data3 <- tot_employ_bea()
-  data4 <- gdp_cur_bea()
+  data3 <- tot_employ_bea(bea_api)
+  data4 <- gdp_cur_bea(bea_api)
   data5 <- get_url()
   
   data12 = left_join(x=data,y=data2,by=c("state","year"))

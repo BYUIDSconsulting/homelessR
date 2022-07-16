@@ -115,7 +115,7 @@ clean_data <- function(data, year){
     filter(df2$state %in% stringr::str_to_upper(states))
   
   ## add a column with the year of data
-  df3$year <- year
+  df3$Year <- year
   
   ## rename forcible rape to rape
   if (year <= 2016 & year >= 2013) {

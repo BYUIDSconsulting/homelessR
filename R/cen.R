@@ -57,7 +57,7 @@ get_census_data <- function(table = "B01001", start_year=2010, end_year=2019,  o
     
     data7 <- data6 |> dplyr::rename(Category = name) |> dplyr::select(-value, value) |> 
       dplyr::rename(state = NAME) |> dplyr::rename(Year = year)
-    colnames(data7) = gsub(pattern = ":", replacement = "", x = colnames(data7))
+    colnames(data7) <- gsub(pattern = ":", replacement = "", x = colnames(data7))
     
     
     if (nrow(temp) == 0) {

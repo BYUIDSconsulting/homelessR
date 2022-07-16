@@ -8,7 +8,7 @@ get_everything <- function(cen_api, bea_api){
   establish_census_api(cen_api)
   
   data <- get_census_data()
-  data2 <- get_hud()
+  data2 <- hud_data()
   data3 <- tot_employ_bea(bea_api)
   data4 <- gdp_cur_bea(bea_api)
   data5 <- get_url()

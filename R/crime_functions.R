@@ -38,7 +38,7 @@ get_url <- function(start_year=2006, end_year=2017, region='state'){
     else if (year == 2010) {
       url <- paste0("https://ucr.fbi.gov/crime-in-the-u.s/", year, "/crime-in-the-u.s.-", year, "/tables/10tbl10.xls")
     }
-    else if (year == 2009 | year == 2008 | year == 2007 | year ==2006){
+    else if (year == 2009 | year == 2008 | year == 2007 | year == 2006){
       last_two = substring(year, 2)
       url = paste0("https://www2.fbi.gov/ucr/cius", year, "/data/documents/", substring(year, 3), "tbl10.xls")
     }
@@ -50,7 +50,7 @@ get_url <- function(start_year=2006, end_year=2017, region='state'){
     
     print(colnames(one_year_of_data)) #temporary line
     one_year_of_data = subset(one_year_of_data, select = c(state,area_type, county, violent_crime, murder_and_nonnegligent_manslaughter,
-                    rape,robbery, aggravated_assault, property_crime, burglary, larceny_theft, motor_vehicle_theft, arson, year) )
+                    rape,robbery, aggravated_assault, property_crime, burglary, larceny_theft, motor_vehicle_theft, arson, Year) )
     
     
     if (nrow(temp_data) == 0) {

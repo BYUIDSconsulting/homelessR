@@ -61,7 +61,7 @@ get_url <- function(start_year=2006, end_year=2017, region='state'){
   }
   if (region=='state') {
     temp_data[is.na(temp_data)] = '0'
-    temp_data = temp_data %>% group_by(state, year) %>%
+    temp_data = temp_data %>% group_by(state, Year) %>%
       summarise(violent_crime = sum(as.integer(violent_crime)),
                 murder_and_nonnegligent_manslaughter = sum(as.integer(murder_and_nonnegligent_manslaughter)),
                 rape = sum(as.integer(rape)),
@@ -118,7 +118,7 @@ clean_data <- function(data, year){
   df3$Year <- year
   
   ## rename forcible rape to rape
-  if (Year <= 2016 & Year >= 2013) {
+  if (year <= 2016 & year >= 2013) {
     df3$`rape_legacy_definition_` <- as.numeric(df3$`rape_legacy_definition_`)
     df3$`rape_revised_definition_` <- as.numeric(df3$`rape_revised_definition_`)
     df3[["rape_legacy_definition_"]][is.na(df3[["rape_legacy_definition_"]])] <- 0
@@ -126,7 +126,7 @@ clean_data <- function(data, year){
     df3$rape <- df3$rape_legacy_definition_ + df3$rape_revised_definition_
     df3 <- df3[, -c(6:7)]
   }
-  else if (Year <= 2012) {
+  else if (year <= 2012) {
     df3 <- df3 |>
       dplyr::rename('rape' = 'forcible_rape')
   }

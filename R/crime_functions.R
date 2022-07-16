@@ -114,6 +114,10 @@ clean_data <- function(data, year){
   df3 <- df2 |>
     filter(df2$state %in% stringr::str_to_upper(states))
   
+  #change the case for each state
+  df3$state <- df3$state.charAt(0) + tolowers(df3$state.slice(1))
+  
+  
   ## add a column with the year of data
   df3$Year <- year
   

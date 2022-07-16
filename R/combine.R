@@ -14,7 +14,7 @@ get_everything <- function(cen_api, bea_api){
   data5 <- get_url()
   data6 <- unemployment()
   #data7 <- get_census_data(table='B04003')
-  data <- get_census_data(table='B05001')
+  data7 <- get_census_data(table='B05001')
   
   data12 <- merge(x=data,y=data2,by=c("state","Year"), all=TRUE)
   data123 <- merge(x=data12,y=data3,by=c("state","Year"), all=TRUE)

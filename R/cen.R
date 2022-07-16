@@ -65,7 +65,7 @@ get_census_data <- function(table = "B01001", start_year=2010, end_year=2019,  o
     if (nrow(temp) == 0) {
       temp <- data8
     } else {
-      temp <- rbind(temp, data7)
+      temp <- rbind(temp, data8)
     }
   }
   

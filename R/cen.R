@@ -57,17 +57,18 @@ get_census_data <- function(table = "B01001", start_year=2010, end_year=2019,  o
     
     data7 <- data6 |> dplyr::rename(Category = name) |> dplyr::select(-value, value) |> 
       dplyr::rename(state = NAME) |> dplyr::rename(Year = year) 
-    
+    data8 <- data7 |> tidyr::pivot_wider(names_from = Category, values_from = value)
+    colnames(data8) <- gsub(pattern = ":", replacement = "", x = colnames(data8))
     
     if (nrow(temp) == 0) {
-      temp <- data7
+      temp <- data8
     } else {
       temp <- rbind(temp, data7)
     }
   }
-  temp2 <- temp |> tidyr::pivot_wider(names_from = Category, values_from = value)
-  colnames(temp2) <- gsub(pattern = ":", replacement = "", x = colnames(temp2))
-  return(temp2)
+  
+  
+  return(temp)
 }
 
 #' @import tidycensus

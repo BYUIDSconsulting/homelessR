@@ -60,6 +60,8 @@ get_census_data <- function(table = "B01001", start_year=2010, end_year=2019,  o
     data8 <- data7 |> tidyr::pivot_wider(names_from = Category, values_from = value)
     colnames(data8) <- gsub(pattern = ":", replacement = "", x = colnames(data8))
     
+    print(colnames(data8))
+    
     if (nrow(temp) == 0) {
       temp <- data8
     } else {

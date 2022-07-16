@@ -111,9 +111,10 @@ clean_data <- function(data, year){
   ## remove the rows about the subscripts
   states <- c("Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", 
               "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming")
-  df3 <- df2 |>
+  df3 <- df2 |>?slice
+  
     filter(df2$state %in% stringr::str_to_upper(states)) |>
-    mutate(state = (state.charAt(0) + tolowers(state.slice(1))))
+    mutate(state = (substr(state, 1, 1) + tolowers(substr(state, 2, nchar(state)))))
   
   #change the case for each state
   #df3$state <- df3$state.charAt(0) + tolowers(df3$state.slice(1))

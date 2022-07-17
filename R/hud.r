@@ -3,7 +3,7 @@
 #' @param y - The year that you want to find data. Current avalable years are between 2007 - 2020
 #' @param url1 - The URL pulls from hud dataset of number of homelessness by state
 
-hud_data <- function(y, url1= 'https://www.huduser.gov/portal/sites/default/files/xls/2007-2021-PIT-Counts-by-State.xlsx'){
+get_hud_data <- function(y, url1= 'https://www.huduser.gov/portal/sites/default/files/xls/2007-2021-PIT-Counts-by-State.xlsx'){
   hud = openxlsx::read.xlsx(url1,sheet=y)
   names(hud) <- gsub(".", " ", names(hud), fixed = TRUE)
   hud$Year <- as.numeric(y)
@@ -43,7 +43,7 @@ ST_to_State <- function(dataframe) {
 #' @import usethis
 #' @export 
 gather_hud_data <- function(){
-  da2007 <- hud_data('2007')
+  da2007 <- get_hud_data('2007')
   columns <-  colnames(da2007)
   da2008 <- dplyr::select(hud_data('2008'),columns)
   da2009 <- dplyr::select(hud_data('2009'),columns)

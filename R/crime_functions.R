@@ -113,7 +113,7 @@ clean_data <- function(data, year){
               "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming")
   df3 <- df2 |>
     filter(df2$state %in% stringr::str_to_upper(states)) |>
-    mutate(state = paste0(substr(state, 1, 1), stringr::str_to_lower(substr(state, 2, nchar(state)))), sep="")
+    mutate(state = paste0(substr(state, 1, 1), stringr::str_to_lower(substr(state, 2, nchar(state)))))
   
   #change the case for each state
   #df3$state <- df3$state.charAt(0) + tolowers(df3$state.slice(1))

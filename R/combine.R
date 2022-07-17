@@ -8,12 +8,11 @@ get_everything <- function(cen_api, bea_api){
   establish_census_api(cen_api)
   
   data <- get_census_data()
-  data2 <- gather_hud_data()
-  data3 <- tot_employ_bea(bea_api)
-  data4 <- gdp_cur_bea(bea_api)
+  data2 <- hud_data
+  data3 <- total_employment_data
+  data4 <- gdp_data
   data5 <- get_url()
-  data6 <- unemployment()
-  #data7 <- get_census_data(table='B04003')
+  data6 <- unemploy_rate_data
   data7 <- get_census_data(table='B05001')
   
   data12 <- merge(x=data,y=data2,by=c("state","Year"), all=TRUE)

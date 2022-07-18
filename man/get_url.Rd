@@ -4,7 +4,7 @@
 \alias{get_url}
 \title{get_url}
 \usage{
-get_url(start_year = 2006, end_year = 2017, region = "state")
+get_url(start_year = 2006, end_year = 2019, region = "state")
 }
 \arguments{
 \item{year}{year of data desired from 2006-2019 excluding 2008 and 2016}

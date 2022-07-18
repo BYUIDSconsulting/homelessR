@@ -4,7 +4,7 @@
 \alias{get_everything}
 \title{get_everything}
 \usage{
-get_everything(cen_api, bea_api)
+get_everything(cen_api)
 }
 \description{
 get_everything
